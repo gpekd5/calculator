@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Calculator {
 
     private ArrayList<Integer> resultList = new ArrayList<>();
+    int result;
 
     public ArrayList<Integer> getArrayList(){
         return this.resultList;
@@ -16,41 +17,39 @@ public class Calculator {
         this.resultList = resultList;
     }
 
-    public int add(int a, int b)
-    {
-        int result = a + b;
-        resultList.add(result);
-        return result;
-    }
-
-    public int subtract(int a, int b)
-    {
-        int result = a - b;
-        resultList.add(result);
-        return result;
-    }
-
-    public int multiply(int a, int b)
-    {
-        int result = a * b;
-        resultList.add(result);
-        return result;
-    }
-
-    public int divide(int a, int b)
-    {
-        if (b == 0)
-        {
-            System.out.println("나눗셈 연산에서 분모(두번째 정수)에 0이 입력될 수 없습니다.");
-            return 0;
+    public int calculate(int a, int b, char str){
+        switch (str) {
+            case '+':
+                result = a + b;
+                resultList.add(result);
+                return result;
+            case '-':
+                result = a - b;
+                resultList.add(result);
+                return result;
+            case '*':
+                result = a * b;
+                resultList.add(result);
+                return result;
+            case '/':
+                if (b == 0)
+                {
+                    System.out.println("나눗셈 연산에서 분모(두번째 정수)에 0이 입력될 수 없습니다.");
+                    return 0;
+                }
+                result = a/b;
+                resultList.add(result);
+                return result;
+            default:
+                return 0;
         }
-        int result = a/b;
-        resultList.add(result);
-        return result;
     }
 
     public void removeResult(){
-        resultList.remove(0);
+        //리스트가 비어있지 않을 경우에만 제거!
+        if (!resultList.isEmpty()){
+            resultList.remove(0);
+        }
     }
 
 }
