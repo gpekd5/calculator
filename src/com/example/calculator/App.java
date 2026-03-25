@@ -52,35 +52,23 @@ public class App {
             {
                 System.out.print("사칙연산 기호를 입력하세요(+, -, *, /) : ");
 
-                String lenthCheck = sc.next();
+                String lengthCheck = sc.next();
 
-                if (lenthCheck.length() != 1){
+                if (lengthCheck.length() != 1){
                     System.out.println("연산자는 한 글자만 입력하세요.");
                     continue;
                 }
 
-                char str = lenthCheck.charAt(0);
+                char str = lengthCheck.charAt(0);
 
-                switch (str) {
-                    case '+':
-                        result = cal.add(num1, num2);
-                        break;
-                    case '-':
-                        result = cal.subtract(num1, num2);
-                        break;
-                    case '*':
-                        result = cal.multiply(num1, num2);
-                        break;
-                    case '/':
-                        result = cal.divide(num1, num2);
-                        break;
-                    default:
-                    {
-                        System.out.println("잘못된 연산자입니다.");
-                        continue;
-                    }
+                if (str == '+' || str == '-' || str == '*' || str == '/' ){
+
+                    result = cal.calculate(num1, num2,str);
+                    break;
                 }
-                break;
+                else{
+                    System.out.println("잘못된 연산자입니다.");
+                }
             }
 
             System.out.println("결과 : " + result);
