@@ -8,44 +8,39 @@ public class App {
 
     public static void main(String[] args) {
 
-        int num1 = 0;
-        int num2 = 0;
-        int result = 0;
+        double num1 = 0.1;
+        double num2 = 0.1;
+        double result = 0.1;
 
         Scanner sc = new Scanner(System.in);
-        Calculator cal = new Calculator();
+        ArithmeticCalculator<Double> arithmeticCal = new ArithmeticCalculator<Double>();
 
         while (true) {
             while (true) {
-                System.out.print("첫 번째 숫자(양의 정수)를 입력하세요 : ");
+                System.out.print("첫 번째 숫자를 입력하세요 : ");
 
-                if (sc.hasNextInt()) {
-                    num1 = sc.nextInt();
-                    if (num1 >= 0) {
-                        break;
-                    } else {
-                        System.out.println("양의 정수를 입력하세요!!");
-                    }
-                } else {
+                if (!sc.hasNextDouble()) {
                     System.out.println("숫자를 입력하세요!!");
                     sc.next();
+                    continue;
                 }
-            }
+                num1 = sc.nextDouble();
+                break;
+             }
+
 
             while (true) {
-                System.out.print("두 번째 숫자(양의 정수)를 입력하세요 : ");
+                System.out.print("두 번째 숫자를 입력하세요 : ");
 
-                if (sc.hasNextInt()) {
-                    num2 = sc.nextInt();
-                    if (num2 >= 0) {
-                        break;
-                    } else {
-                        System.out.println("양의 정수를 입력하세요!!");
-                    }
-                } else {
+                if (!sc.hasNextDouble()) {
                     System.out.println("숫자를 입력하세요!!");
                     sc.next();
+                    continue;
                 }
+
+                num2 = sc.nextDouble();
+
+                break;
             }
 
             while (true)
@@ -61,38 +56,60 @@ public class App {
 
                 char str = lengthCheck.charAt(0);
 
-                if (str == '+' || str == '-' || str == '*' || str == '/' ){
+                EnumClass.OperatorType type;
 
-                    result = cal.calculate(num1, num2,str);
-                    break;
+                switch (str){
+                    case '+':
+                        type = EnumClass.OperatorType.ADD;
+                        break;
+                    case '-':
+                        type = EnumClass.OperatorType.SUBTRACT;
+                        break;
+                    case '*':
+                        type = EnumClass.OperatorType.MULTIPLY;
+                        break;
+                    case '/':
+                        type = EnumClass.OperatorType.DIVIDE;
+                        break;
+                    default:
+                        System.out.println("잘못된 연산자입니다.");
+                        continue;
                 }
-                else{
-                    System.out.println("잘못된 연산자입니다.");
-                }
+                result = arithmeticCal.calculate(num1, num2, type);
+                break;
             }
 
             System.out.println("결과 : " + result);
-            System.out.println("전체 결과 목록 : " + cal.getArrayList());
+            System.out.println("전체 결과 목록 : " + arithmeticCal.getArrayList());
 
             System.out.print("저장된 리스트를 강제로 [1,2,3,4,5]로 만드시겠습니까? (yes : 실햄) ");
             sc.nextLine();
             String str1 = sc.nextLine();
             if (str1.equals("yes"))
             {
-                ArrayList<Integer> results = new ArrayList<>(Arrays.asList(1,2,3,4,5));
-                cal.setArrayList(results);
-                System.out.println("전체 결과 목록 : " + cal.getArrayList());
+                ArrayList<Double> results = new ArrayList<>(Arrays.asList(1.0,2.0,3.0,4.0,5.0));
+                arithmeticCal.setArrayList(results);
+                System.out.println("전체 결과 목록 : " + arithmeticCal.getArrayList());
             }
 
             System.out.print("가장 먼저 저장된 데이터를 삭제하겠습니까? (yes : 실행) ");
             str1 = sc.nextLine();
             if (str1.equals("yes"))
             {
-                cal.removeResult();
-                System.out.println("전체 결과 목록 : " + cal.getArrayList());
+                arithmeticCal.removeResult();
+                System.out.println("전체 결과 목록 : " + arithmeticCal.getArrayList());
+            }
+
+            System.out.print("저장된 연산 결과 중 입력받은 값보다 큰 결과값을 출력하겠습니까? (숫자 입력 시 실행) ");
+            if ((sc.hasNextDouble()))
+            {
+                double filter = sc.nextDouble();
+                System.out.println("전체 결과 목록 : " + arithmeticCal.getArrayList());
+                arithmeticCal.filter(filter);
             }
 
             System.out.print("더 계산하시겠습니까? (exit 입력 시 종료) ");
+            sc.nextLine();
             str1 = sc.nextLine();
             if (str1.equals("exit"))
                 break;
