@@ -11,6 +11,17 @@
 1) Enum 클래스 내부로 계산 로직 이동 26.03.27
  - enum 클래스 학습 및 정리 (아래 링크)
  - https://velog.io/@gpekd5/Java-%EB%AC%B8%EB%B2%95-enum-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0
+2) ArrayList가 아닌 List 타입으로 선언
+3) 제네릭 설계 재구현
+ - Main 메서드
+   - 입력 단계부터 double로 고정하는 것이 아니라 Number 을 통해 타입을 유지하도록 변경
+ - ArithmeticCalculator.java
+   - 여러 제네릭 타입을 사용하여 다른 타입을 가지도록 구현
+   - 타입에 따라 연산을 분기하여 입력값이 모두 정수인 경우에는 정수 연산을 수행하고 이외에는 실수 연산
+   - 결과는 Number 타입으로 선언하여 정수와 실수 결과를 모두 담기
+ - OperatorType.java
+   - 메서드 오버로딩하여 같은 calculate 메서드를 int용 / double용으로 나눠서 처리
+   - 입력받아 타입을 구분하는 방식으로 수정
 
 > ### STEP1. 클래스 없이 기본적인 연산 수행 계산기 구현
  

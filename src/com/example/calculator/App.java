@@ -8,37 +8,35 @@ public class App {
 
     public static void main(String[] args) {
 
-        double num1 = 0.0;
-        double num2 = 0.0;
-        double result = 0.0;
+        Number num1;
+        Number num2;
+        Number result;
 
         Scanner sc = new Scanner(System.in);
-        ArithmeticCalculator<Double> arithmeticCal = new ArithmeticCalculator<Double>();
+        ArithmeticCalculator arithmeticCal = new ArithmeticCalculator();
 
         while (true) {
             while (true) {
                 System.out.print("첫 번째 숫자를 입력하세요 : ");
 
-                if (!sc.hasNextDouble()) {
+                try {
+                    num1 = parseNumber(sc.next());
+                    break;
+                } catch (NumberFormatException e) {
                     System.out.println("숫자를 입력하세요!!");
-                    sc.next();
-                    continue;
                 }
-                num1 = sc.nextDouble();
-                break;
             }
 
 
             while (true) {
                 System.out.print("두 번째 숫자를 입력하세요 : ");
 
-                if (!sc.hasNextDouble()) {
+                try {
+                    num2 = parseNumber(sc.next());
+                    break;
+                } catch (NumberFormatException e) {
                     System.out.println("숫자를 입력하세요!!");
-                    sc.next();
-                    continue;
                 }
-                num2 = sc.nextDouble();
-                break;
             }
 
             while (true) {
@@ -56,9 +54,9 @@ public class App {
                 //enum에서 throw로 "에러 메세지"를 던지고 catch로 받아서 출력
                 try {
                     OperatorType type = OperatorType.searchType(str);
-                    result = type.calculate(num1, num2);
+                    result = arithmeticCal.calculator(num1, num2, type);
                     break;
-                } catch (IllegalArgumentException e) {
+                } catch (IllegalArgumentException | ArithmeticException e) {
                     System.out.println(e.getMessage());
                 }
             }
@@ -66,11 +64,12 @@ public class App {
             System.out.println("결과 : " + result);
             System.out.println("전체 결과 목록 : " + arithmeticCal.getList());
 
-            System.out.print("저장된 리스트를 강제로 [1,2,3,4,5]로 만드시겠습니까? (yes : 실햄) ");
             sc.nextLine();
+
+            System.out.print("저장된 리스트를 강제로 [1,2,3,4,5]로 만드시겠습니까? (yes : 실햄) ");
             String str1 = sc.nextLine();
             if (str1.equals("yes")) {
-                ArrayList<Double> results = new ArrayList<>(Arrays.asList(1.0, 2.0, 3.0, 4.0, 5.0));
+                ArrayList<Number> results = new ArrayList<>(Arrays.asList(1.0, 2.0, 3.0, 4.0, 5.0));
                 arithmeticCal.setList(results);
                 System.out.println("전체 결과 목록 : " + arithmeticCal.getList());
             }
@@ -95,5 +94,13 @@ public class App {
             if (str1.equals("exit"))
                 break;
         }
+    }
+
+    //문자 파싱
+    public static Number parseNumber(String input) {
+        if (input.contains(".")) {
+            return Double.parseDouble(input);
+        }
+        return Integer.parseInt(input);
     }
 }
