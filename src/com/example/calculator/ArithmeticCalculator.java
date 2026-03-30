@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 public class ArithmeticCalculator<T extends Number> {
 
-    private ArrayList<Double> resultList = new ArrayList<>();
+    private List<Double> resultList = new ArrayList<>();
 
     public void filter(double num1) {
         if (!resultList.isEmpty()) {
@@ -21,11 +21,11 @@ public class ArithmeticCalculator<T extends Number> {
 
     }
 
-    public ArrayList<Double> getArrayList() {
+    public List<Double> getList() {
         return this.resultList;
     }
 
-    public void setArrayList(ArrayList<Double> resultList) {
+    public void setList(List<Double> resultList) {
         this.resultList = resultList;
     }
 

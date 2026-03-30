@@ -64,28 +64,28 @@ public class App {
             }
 
             System.out.println("결과 : " + result);
-            System.out.println("전체 결과 목록 : " + arithmeticCal.getArrayList());
+            System.out.println("전체 결과 목록 : " + arithmeticCal.getList());
 
             System.out.print("저장된 리스트를 강제로 [1,2,3,4,5]로 만드시겠습니까? (yes : 실햄) ");
             sc.nextLine();
             String str1 = sc.nextLine();
             if (str1.equals("yes")) {
                 ArrayList<Double> results = new ArrayList<>(Arrays.asList(1.0, 2.0, 3.0, 4.0, 5.0));
-                arithmeticCal.setArrayList(results);
-                System.out.println("전체 결과 목록 : " + arithmeticCal.getArrayList());
+                arithmeticCal.setList(results);
+                System.out.println("전체 결과 목록 : " + arithmeticCal.getList());
             }
 
             System.out.print("가장 먼저 저장된 데이터를 삭제하겠습니까? (yes : 실행) ");
             str1 = sc.nextLine();
             if (str1.equals("yes")) {
                 arithmeticCal.removeResult();
-                System.out.println("전체 결과 목록 : " + arithmeticCal.getArrayList());
+                System.out.println("전체 결과 목록 : " + arithmeticCal.getList());
             }
 
             System.out.print("저장된 연산 결과 중 입력받은 값보다 큰 결과값을 출력하겠습니까? (숫자 입력 시 실행) ");
             if ((sc.hasNextDouble())) {
                 double filter = sc.nextDouble();
-                System.out.println("전체 결과 목록 : " + arithmeticCal.getArrayList());
+                System.out.println("전체 결과 목록 : " + arithmeticCal.getList());
                 arithmeticCal.filter(filter);
             }
 
