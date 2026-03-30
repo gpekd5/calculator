@@ -8,37 +8,35 @@ public class App {
 
     public static void main(String[] args) {
 
-        double num1 = 0.0;
-        double num2 = 0.0;
-        double result = 0.0;
+        Number num1;
+        Number num2;
+        Number result;
 
         Scanner sc = new Scanner(System.in);
-        ArithmeticCalculator<Double> arithmeticCal = new ArithmeticCalculator<Double>();
+        ArithmeticCalculator arithmeticCal = new ArithmeticCalculator();
 
         while (true) {
             while (true) {
                 System.out.print("첫 번째 숫자를 입력하세요 : ");
 
-                if (!sc.hasNextDouble()) {
+                try {
+                    num1 = parseNumber(sc.next());
+                    break;
+                } catch (NumberFormatException e) {
                     System.out.println("숫자를 입력하세요!!");
-                    sc.next();
-                    continue;
                 }
-                num1 = sc.nextDouble();
-                break;
             }
 
 
             while (true) {
                 System.out.print("두 번째 숫자를 입력하세요 : ");
 
-                if (!sc.hasNextDouble()) {
+                try {
+                    num2 = parseNumber(sc.next());
+                    break;
+                } catch (NumberFormatException e) {
                     System.out.println("숫자를 입력하세요!!");
-                    sc.next();
-                    continue;
                 }
-                num2 = sc.nextDouble();
-                break;
             }
 
             while (true) {
@@ -56,36 +54,37 @@ public class App {
                 //enum에서 throw로 "에러 메세지"를 던지고 catch로 받아서 출력
                 try {
                     OperatorType type = OperatorType.searchType(str);
-                    result = type.calculate(num1, num2);
+                    result = arithmeticCal.calculator(num1, num2, type);
                     break;
-                } catch (IllegalArgumentException e) {
+                } catch (IllegalArgumentException | ArithmeticException e) {
                     System.out.println(e.getMessage());
                 }
             }
 
             System.out.println("결과 : " + result);
-            System.out.println("전체 결과 목록 : " + arithmeticCal.getArrayList());
+            System.out.println("전체 결과 목록 : " + arithmeticCal.getList());
+
+            sc.nextLine();
 
             System.out.print("저장된 리스트를 강제로 [1,2,3,4,5]로 만드시겠습니까? (yes : 실햄) ");
-            sc.nextLine();
             String str1 = sc.nextLine();
             if (str1.equals("yes")) {
-                ArrayList<Double> results = new ArrayList<>(Arrays.asList(1.0, 2.0, 3.0, 4.0, 5.0));
-                arithmeticCal.setArrayList(results);
-                System.out.println("전체 결과 목록 : " + arithmeticCal.getArrayList());
+                ArrayList<Number> results = new ArrayList<>(Arrays.asList(1.0, 2.0, 3.0, 4.0, 5.0));
+                arithmeticCal.setList(results);
+                System.out.println("전체 결과 목록 : " + arithmeticCal.getList());
             }
 
             System.out.print("가장 먼저 저장된 데이터를 삭제하겠습니까? (yes : 실행) ");
             str1 = sc.nextLine();
             if (str1.equals("yes")) {
                 arithmeticCal.removeResult();
-                System.out.println("전체 결과 목록 : " + arithmeticCal.getArrayList());
+                System.out.println("전체 결과 목록 : " + arithmeticCal.getList());
             }
 
             System.out.print("저장된 연산 결과 중 입력받은 값보다 큰 결과값을 출력하겠습니까? (숫자 입력 시 실행) ");
             if ((sc.hasNextDouble())) {
                 double filter = sc.nextDouble();
-                System.out.println("전체 결과 목록 : " + arithmeticCal.getArrayList());
+                System.out.println("전체 결과 목록 : " + arithmeticCal.getList());
                 arithmeticCal.filter(filter);
             }
 
@@ -95,5 +94,13 @@ public class App {
             if (str1.equals("exit"))
                 break;
         }
+    }
+
+    //문자 파싱
+    public static Number parseNumber(String input) {
+        if (input.contains(".")) {
+            return Double.parseDouble(input);
+        }
+        return Integer.parseInt(input);
     }
 }
